@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct qingkuang
+{
+    int gold;
+    int all;
+    int people;
+    int paiming1;
+    int paiming2;
+    int xulie[5]={0,1,1,1,1};
+}qingkuang[224];
+int main()
+{
+    int n;
+    int N,M,i,j;
+    int a[224];
+    scanf("%d %d",&N,&M);
+    if(N>224||M>N)
+        printf("输入错误");
+    for(i=0;i<N;i++)
+    {
+        scanf("%d %d %d",&qingkuang[i].gold,&qingkuang[i].all,&qingkuang[i].people);
+        qingkuang[i].paiming1=qingkuang[i].gold/qingkuang[i].people;
+        qingkuang[i].paiming2=qingkuang[i].all/qingkuang[i].people;
+    }
+    for(i=0;i<M;i++)
+    {
+        scanf("%d",a[i]);
+    }
+    for(i=0;i<N;i++)
+    {
+           for(j=0;j<N;j++)
+           {
+               if(qingkuang[i].gold<qingkuang[j].gold)
+                qingkuang[i].xulie[1]++;
+               if(qingkuang[i].all<qingkuang[j].all)
+                qingkuang[i].xulie[2]++;
+               if(qingkuang[i].paiming1<qingkuang[j].paiming1)
+                qingkuang[i].xulie[3]++;
+               if(qingkuang[i].paiming2<qingkuang[j].paiming2)
+                qingkuang[i].xulie[4]++;
+           }
+    }
+    for(i=0;i<M;i++)
+    {
+        n=paixu(qingkuang[a[i]]);
+        printf("%d:%d ",qingkuang[a[i]].xulie[n],n);
+    }
+    return 0;
+}
+int paixu(struct qingkuang *qingkuang)
+{
+    int i,min=qingkuang->xulie[1];
+    int minnum = 1;
+    for(i=1;i<=4;i++)
+    {
+        if(qingkuang->xulie[i]<min)
+            min = qingkuang->xulie[i];
+            minnum=i;
+    }
+    return minnum;
+}
